@@ -99,7 +99,7 @@
   <div class="wrap">
     <header>
       <h1>Gen AI intern take-home (Legixo Thinklabs)</h1>
-      <p class="lead">Build a small Q&amp;A app over documents: Python, LangGraph, Pinecone. Plain language brief below.</p>
+      <p class="lead">Build a small Q&amp;A <strong>HTTP API</strong> over documents: Python, LangGraph, Pinecone. Plain language brief below.</p>
     </header>
 
     <section>
@@ -127,7 +127,7 @@
         <li><strong>Python</strong> (3.10 or newer).</li>
         <li><strong>LangGraph</strong> to run the flow (for example <code>StateGraph</code>). Do not hide everything inside one giant LLM call with no graph.</li>
         <li><strong>Pinecone</strong> for the vector index. Use the real Pinecone service and their Python client. A fake “in-memory only” vector DB does not count.</li>
-        <li><strong>One way to talk to your app:</strong> either a <strong>CLI</strong> or a small <strong>HTTP API</strong>. You do not need both.</li>
+        <li><strong>HTTP API only for Q&amp;A:</strong> expose at least one endpoint (for example <code>POST /ask</code>) that accepts a question and returns JSON (answer + citations, and optional trace). Use a framework you like (for example FastAPI or Flask). <strong>No CLI</strong> for asking questions. Ingestion may be a separate documented command or an API route—your choice, but reviewers must be able to load the corpus without a custom REPL.</li>
       </ul>
     </section>
 
@@ -136,7 +136,7 @@
       <ol>
         <li><strong>Ingest:</strong> Read the files, split into chunks, embed, save vectors in Pinecone with metadata (at least chunk id and source file path) so you can cite them later.</li>
         <li><strong>Ask:</strong> User asks a question → your LangGraph should <strong>search Pinecone</strong>, then <strong>check if the chunks are good enough</strong> (this step should use a <strong>branch</strong> in the graph: good path vs bad path), then <strong>write the answer</strong> with citations. Set a <strong>max step / max loop</strong> so it cannot spin forever.</li>
-        <li><strong>Docs:</strong> <code>README.md</code> (how to install, set env vars, ingest, run). <code>.env.example</code> with dummy values only. A short <strong>LangGraph map</strong> in <code>docs/langgraph.md</code> or in the README (list nodes, what each does, simple diagram is fine).</li>
+        <li><strong>Docs:</strong> <code>README.md</code> (how to install, set env vars, ingest, <strong>start the API server</strong>, example <code>curl</code> or Postman steps). <code>.env.example</code> with dummy values only. A short <strong>LangGraph map</strong> in <code>docs/langgraph.md</code> or in the README (list nodes, what each does, simple diagram is fine).</li>
         <li><strong>Self-test file:</strong> about 10–15 questions in JSON or CSV with columns like question, which files should appear in citations, and your own pass/fail notes after you try them.</li>
       </ol>
     </section>
@@ -153,7 +153,7 @@
       <h2>What to send us</h2>
       <ul>
         <li>Link to your git repo.</li>
-        <li>README with setup and a <strong>link to a 5–10 minute video</strong>: install, ingest, a few good answers with citations, one question the docs cannot answer, and you pointing at your LangGraph layout.</li>
+        <li>README with setup and a <strong>link to a 5–10 minute video</strong>: install, ingest, start the API, call the ask endpoint (for example with <code>curl</code> or Postman), a few good answers with citations, one question the docs cannot answer, and you pointing at your LangGraph layout.</li>
       </ul>
     </section>
 
@@ -163,14 +163,14 @@
         <li>Does the LangGraph make sense (clear steps, branch, limit)?</li>
         <li>Are answers tied to real chunks? Any fake citations?</li>
         <li>Does Pinecone ingest and search work?</li>
-        <li>Can a new person run it from the README?</li>
+        <li>Can a new person run the server and call the API from the README?</li>
       </ul>
       <p class="muted">Extras (not required): LangSmith, hybrid search, reranker.</p>
     </section>
 
     <section>
       <h2>Copy-paste text for candidates</h2>
-      <pre>Build a Python Q&amp;A tool over the sample ZIP we provide (or that corpus plus your own fake docs). Use LangGraph with at least one branch after retrieval. Use Pinecone for vectors. Add ingest + CLI or API, README, .env.example, a short LangGraph write-up, and 10–15 self-test questions with expected sources. Use your own API keys. Submit repo + 5–10 min demo video link in README. No real client data.</pre>
+      <pre>Build a Python Q&amp;A HTTP API over the sample ZIP we provide (or that corpus plus your own fake docs). Use LangGraph with at least one branch after retrieval. Use Pinecone for vectors. Expose Q&amp;A only via HTTP (e.g. POST /ask)—no CLI for questions. Add ingest (command or route), README with curl/Postman examples, .env.example, a short LangGraph write-up, and 10–15 self-test questions with expected sources. Use your own API keys. Submit repo + 5–10 min demo video link in README. No real client data.</pre>
     </section>
 
     <footer>
