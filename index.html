@@ -170,7 +170,22 @@
 
     <section>
       <h2>Copy-paste text for candidates</h2>
-      <pre>Build a Python Q&amp;A HTTP API over the sample ZIP we provide (or that corpus plus your own fake docs). Use LangGraph with at least one branch after retrieval. Use Pinecone for vectors. Expose Q&amp;A only via HTTP (e.g. POST /ask)—no CLI for questions. Add ingest (command or route), README with curl/Postman examples, .env.example, a short LangGraph write-up, and 10–15 self-test questions with expected sources. Use your own API keys. Submit repo + 5–10 min demo video link in README. No real client data.</pre>
+      <pre>Legixo Thinklabs — Gen AI intern take-home
+
+Build a small Python service that answers questions using only our sample legal-style corpus (ZIP / markdown in the brief repo), or that corpus plus more fictional docs you add. Answers must be grounded with citations to retrieved chunks; if the docs do not support an answer, say so—no invented citations.
+
+Requirements:
+• Python 3.10+
+• LangGraph: implement the ask flow as a StateGraph (or equivalent) with at least one conditional branch after retrieval, and a max step / loop limit.
+• Pinecone: mandatory for vectors; use the real service and official Python client.
+• HTTP API only for Q&amp;A: expose at least one endpoint (e.g. POST /ask) returning JSON (answer, citations; optional trace). FastAPI or Flask is fine. Do not use a CLI as the way to submit questions.
+• Ingestion: document a repeatable way to load the corpus into Pinecone (script, module, or HTTP route—your choice).
+• Ship README.md (install, env, ingest, start server, example curl or Postman), .env.example (no secrets), and a short LangGraph design note (e.g. docs/langgraph.md).
+• Include 10–15 self-test questions with expected sources (JSON or CSV).
+
+Use your own API keys. Submit a link to your solution repo and a 5–10 minute demo video (link in README): setup, ingest, start API, call the ask endpoint, show citations, one out-of-corpus question, and briefly explain your graph.
+
+All sample content is fiction; do not use real client or Legixo production data.</pre>
     </section>
 
     <footer>
