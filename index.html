@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Legixo — Gen AI Intern Take-Home</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --card: #fff;
+      --text: #222;
+      --muted: #555;
+      --border: #ddd;
+      --accent: #154a8c;
+      --btn: #154a8c;
+      --btn-hover: #0f3a6e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
+    header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.25rem 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.25rem; font-weight: 700; }
+    .lead { color: var(--muted); margin: 0; font-size: 0.95rem; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+    h2 {
+      font-size: 1.05rem;
+      margin: 0 0 0.5rem;
+      color: var(--accent);
+    }
+    h3 { font-size: 0.95rem; margin: 0.75rem 0 0.35rem; }
+    ul, ol { margin: 0.35rem 0 0.5rem 1.15rem; padding: 0; }
+    li { margin: 0.2rem 0; }
+    p { margin: 0.4rem 0; }
+    a { color: var(--accent); }
+    code {
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.88em;
+      background: #eef3f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+    pre {
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.8rem;
+      background: #1e2936;
+      color: #e8eaed;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 0.5rem 0 0;
+    }
+    .download {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.55rem 1rem;
+      background: var(--btn);
+      color: #fff !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .download:hover { background: var(--btn-hover); }
+    .note {
+      background: #fffbeb;
+      border: 1px solid #f5d78a;
+      border-radius: 6px;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.92rem;
+      margin-top: 0.5rem;
+    }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 0.35rem 0; }
+    th, td { border: 1px solid var(--border); padding: 0.4rem 0.5rem; text-align: left; }
+    th { background: #eef3f9; }
+    footer { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Gen AI intern take-home (Legixo Thinklabs)</h1>
+      <p class="lead">Build a small Q&amp;A app over documents: Python, LangGraph, Pinecone. Plain language brief below.</p>
+    </header>
+
+    <section>
+      <h2>Sample documents (download)</h2>
+      <p>We give you a <strong>zip of fake legal-style notes</strong> (made-up parties and courts). You can use this as your whole corpus, or mix in more files in the same style.</p>
+      <p><a class="download" href="./gen_ai_takehome_sample_corpus.zip" download>Download sample corpus (ZIP)</a></p>
+      <p class="muted">ZIP: <code>gen_ai_takehome_sample_corpus.zip</code>. Same files are in <code>gen_ai_takehome_sample_corpus/</code> in this repo.</p>
+      <div class="note">
+        <strong>Reminder:</strong> Everything in the zip is fiction. Do not use real client data or Legixo production data in your project.
+      </div>
+    </section>
+
+    <section>
+      <h2>Quick facts</h2>
+      <table>
+        <tr><th>Time</th><td>About 3–5 days. If you stop early, say what you skipped in the README.</td></tr>
+        <tr><th>Goal</th><td>Answer questions <strong>only from your document set</strong>. Show which chunk each answer came from. If the docs do not say it, say you cannot find it.</td></tr>
+        <tr><th>Keys</th><td>Use <strong>your own</strong> API keys (LLM + embeddings + Pinecone). Never put keys in git.</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>What you must use</h2>
+      <ul>
+        <li><strong>Python</strong> (3.10 or newer).</li>
+        <li><strong>LangGraph</strong> to run the flow (for example <code>StateGraph</code>). Do not hide everything inside one giant LLM call with no graph.</li>
+        <li><strong>Pinecone</strong> for the vector index. Use the real Pinecone service and their Python client. A fake “in-memory only” vector DB does not count.</li>
+        <li><strong>One way to talk to your app:</strong> either a <strong>CLI</strong> or a small <strong>HTTP API</strong>. You do not need both.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What you must build</h2>
+      <ol>
+        <li><strong>Ingest:</strong> Read the files, split into chunks, embed, save vectors in Pinecone with metadata (at least chunk id and source file path) so you can cite them later.</li>
+        <li><strong>Ask:</strong> User asks a question → your LangGraph should <strong>search Pinecone</strong>, then <strong>check if the chunks are good enough</strong> (this step should use a <strong>branch</strong> in the graph: good path vs bad path), then <strong>write the answer</strong> with citations. Set a <strong>max step / max loop</strong> so it cannot spin forever.</li>
+        <li><strong>Docs:</strong> <code>README.md</code> (how to install, set env vars, ingest, run). <code>.env.example</code> with dummy values only. A short <strong>LangGraph map</strong> in <code>docs/langgraph.md</code> or in the README (list nodes, what each does, simple diagram is fine).</li>
+        <li><strong>Self-test file:</strong> about 10–15 questions in JSON or CSV with columns like question, which files should appear in citations, and your own pass/fail notes after you try them.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Pinecone checklist</h2>
+      <ul>
+        <li>Tell us how to create the index and which env vars you need (in <code>.env.example</code>).</li>
+        <li>Say what happens if we run ingest twice (for example: same point ids, or delete namespace first).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What to send us</h2>
+      <ul>
+        <li>Link to your git repo.</li>
+        <li>README with setup and a <strong>link to a 5–10 minute video</strong>: install, ingest, a few good answers with citations, one question the docs cannot answer, and you pointing at your LangGraph layout.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How we will score (simple)</h2>
+      <ul>
+        <li>Does the LangGraph make sense (clear steps, branch, limit)?</li>
+        <li>Are answers tied to real chunks? Any fake citations?</li>
+        <li>Does Pinecone ingest and search work?</li>
+        <li>Can a new person run it from the README?</li>
+      </ul>
+      <p class="muted">Extras (not required): LangSmith, hybrid search, reranker.</p>
+    </section>
+
+    <section>
+      <h2>Copy-paste text for candidates</h2>
+      <pre>Build a Python Q&amp;A tool over the sample ZIP we provide (or that corpus plus your own fake docs). Use LangGraph with at least one branch after retrieval. Use Pinecone for vectors. Add ingest + CLI or API, README, .env.example, a short LangGraph write-up, and 10–15 self-test questions with expected sources. Use your own API keys. Submit repo + 5–10 min demo video link in README. No real client data.</pre>
+    </section>
+
+    <footer>
+      Assignment page: <code>index.html</code> in this repository.
+    </footer>
+  </div>
+</body>
+</html>
