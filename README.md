@@ -15,3 +15,5 @@ This repository holds only the **assignment brief** and **sample documents**. Yo
 | `index.html`                        | Full assignment (open in browser)            |
 | `gen_ai_takehome_sample_corpus.zip` | Same corpus as a single download             |
 | `gen_ai_takehome_sample_corpus/`    | Unpacked markdown sample docs (fiction only) |
+| `sample_test_cases.md`              | Optional questions + sample answers + expected sources |
+| `sample_test_cases.json`            | Same test cases in JSON for scripts          |
